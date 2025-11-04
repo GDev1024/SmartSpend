@@ -1,0 +1,28 @@
+title: SmartSpend
+title: SmartSpend
+email: ""
+description: "Personal finance and budgeting site for SmartSpend"
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "" # the base hostname & protocol for your site
+theme: minima
+plugins:
+  - jekyll-feed
+markdown: kramdown
+exclude:
+  - "node_modules"
+
+# Enable future collections and reading time (optional)
+future: true
+reading_time: true
+
+# Build settings
+paginate: 5
+paginate_path: /page:num/
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
