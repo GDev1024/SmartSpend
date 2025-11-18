@@ -1,7 +1,7 @@
 /*
  * SmartSpend - Student Financial Management System
  * CIT234 Final Project
- * Developers: Garyson Walker, Destiny
+ * Developers: Garyson Walker, Destiny Abraham
  */
 
 #include <iostream>
