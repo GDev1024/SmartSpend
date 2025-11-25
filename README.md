@@ -7,7 +7,8 @@
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" alt="C++" width="40" />
 </p>
 
-A simple console-based application that helps college students track spending, manage savings, and project future financial outcomes using efficient data structures and algorithms.  
+SmartSpend is a lightweight financial tracking tool designed specifically for college students who want to better manage their daily allowance, savings, and overall financial habits.
+The system uses efficient Data Structures and Algorithms (DSA) to ensure fast performance, simple navigation, and scalable transaction management.
 
 ---
 
