@@ -7,7 +7,7 @@
 }
 
 body {
-  background: #1d061a;
+  background: #000108;
   color: #fff;
   display: flex;
   justify-content: center;
@@ -25,24 +25,29 @@ body {
 }
 
 /* Header */
+.header {
+  width: 120%;
+  max-width: 400px; 
+  margin: 0 auto 20px; 
+  text-align: center; 
+}
 
+/* Logo Image */
 .header .logo {
-  width: 250px;        
-  max-width: 80%;    
-  height: auto;
-  margin: 0 auto 15px auto;
-  display: block;
+  width: 100%; 
+  height: auto; 
+  align-self: center;
+  margin-bottom: 5px; 
 }
 
+/* Header Text */
 .header p {
-  font-size: 1.2em;
-  color: #fff;
+  font-size: 1.1rem;
+  color: #f0f0f0; 
+  font-weight: 500;
+  margin: 0; 
 }
 
-.header .subtitle {
-  font-size: 0.9em;
-  color: #ccc;
-}
 
 /* Animated Gradient Blur for Cards */
 .card {
@@ -55,15 +60,53 @@ body {
   margin-bottom: 20px;
   width: 100%;
   max-width: 500px;
-  transition: 0.3s;
-  border: 2px solid transparent;
+  transition: transform 0.3s ease;
+  border: 2px solid transparent; /* fallback */
+  overflow: hidden; /* needed for pseudo-element */
 }
 
-/* Gradient border via box-shadow on hover */
+/* Optional pop effect */
 .card:hover {
-  box-glow: linear-gradient(45deg, #ff0058, #03a9f4, #4dff03, #ffbc00);
+  transform: translateY(-5px);
 }
 
+/* Animated gradient border */
+.card::before {
+  content: '';
+  position: absolute;
+  top: -2px; left: -2px; bottom: -2px; right: -2px;
+  border-radius: 17px;
+  background: rgba(50, 50, 50, 0.3);
+  background-size: 800% 800%;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Keep inner card content visible */
+.card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  border-radius: 15px;
+  background: rgba(50, 50, 50, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: -1;
+}
+
+/* Show gradient border and animate on hover */
+.card:hover::before {
+  opacity: 1;
+  animation: flowBorder 6s linear infinite;
+}
+
+/* Flowing border animation */
+@keyframes flowBorder {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
 
 /* Stats Dashboard */
 .stats-grid {
@@ -96,8 +139,8 @@ button {
   margin: 5px 0;
   border-radius: 6px;
   font-weight: bold;
-  background: #000;      /* default black */
-  color: #fff;           /* default white text */
+  background: #000108;      
+  color: #fff;           
   position: relative;
   overflow: hidden;
   transition: 0.3s;
@@ -129,7 +172,7 @@ button:hover::after {
 }
 
 button:hover span {
-  color: #111;
+  color: #000108;
 }
 
 
