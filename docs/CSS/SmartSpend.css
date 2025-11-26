@@ -1,93 +1,182 @@
 /* Base Reset */
-* { margin:0; padding:0; box-sizing:border-box; font-family: consolas; }
-body { background:#0a000d; color:#fff; display:flex; justify-content:center; padding:20px; }
-.container { width:100%; max-width:1200px; display:flex; flex-direction:column; align-items:center; gap:20px; }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: consolas;
+}
 
-/* Cards */
-/* Cards */
+body {
+  background: #1d061a;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+}
+
+/* Header */
+
+.header .logo {
+  width: 250px;        
+  max-width: 80%;    
+  height: auto;
+  margin: 0 auto 15px auto;
+  display: block;
+}
+
+.header p {
+  font-size: 1.2em;
+  color: #fff;
+}
+
+.header .subtitle {
+  font-size: 0.9em;
+  color: #ccc;
+}
+
+/* Animated Gradient Blur for Cards */
 .card {
-    background: rgba(247, 247, 242, 0.15);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-radius: 16px;
-    padding: 30px;
-    margin-bottom: 25px;
-    box-shadow: 0 4px 12px rgba(18, 17, 19, 0.1);
-    position: relative;
-    border: 1px solid rgba(255, 255, 255, 0.18);
+  position: relative;
+  background: rgba(50, 50, 50, 0.3); /* Smokey grey */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 500px;
+  transition: 0.3s;
+  border: 2px solid transparent;
 }
 
-.card::before {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    border-radius: 16px;
-    background: linear-gradient(45deg, 
-        var(--moss-green), 
-        var(--beige), 
-        var(--moss-green), 
-        var(--beige));
-    background-size: 300% 300%;
-    z-index: -1;
-    animation: glowingBorder 3s ease infinite;
-    opacity: 0.6;
+/* Gradient border via box-shadow on hover */
+.card:hover {
+  box-glow: linear-gradient(45deg, #ff0058, #03a9f4, #4dff03, #ffbc00);
 }
 
-@keyframes glowingBorder {
-    0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
+
+/* Stats Dashboard */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  margin-bottom: 20px;
 }
 
-h2,h3 { margin-bottom:10px; text-align:center; }
-.input-group { margin:10px 0; display:flex; flex-direction:column; }
-input { padding:8px; border-radius:5px; border:none; background:rgba(255,255,255,0.1); color:#fff; }
+.stat-box {
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: bold;
+  color: #fff;
+  background: rgba(0,0,0,0.4);
+  transition: 0.3s;
+}
 
+.stat-box .amount {
+  font-size: 1.5em;
+  margin-top: 5px;
+}
+
+/* Buttons - Black & White with Gradient Reveal */
 button {
-    cursor:pointer;
-    border:none;
-    padding:10px 15px;
-    margin:5px 0;
-    border-radius:6px;
-    font-weight:bold;
-    background:#000;
-    color:#fff;
-    position:relative;
-    overflow:hidden;
-    transition:0.3s;
+  cursor: pointer;
+  border: none;
+  padding: 10px 15px;
+  margin: 5px 0;
+  border-radius: 6px;
+  font-weight: bold;
+  background: #000;      /* default black */
+  color: #fff;           /* default white text */
+  position: relative;
+  overflow: hidden;
+  transition: 0.3s;
+  z-index: 0;
 }
 
-button span { position:relative; z-index:1; }
+/* Gradient behind the text */
 button::after {
-    content:'';
-    position:absolute; inset:0;
-    background:linear-gradient(45deg,#ff9aa2,#a0c4ff,#b5ead7,#ffe5b4);
-    background-size:400% 400%;
-    opacity:0; transition:0.5s; z-index:-1;
-    animation:gradientMove 10s ease infinite;
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(45deg, #ff0058, #03a9f4, #4dff03, #ffbc00);
+  background-size: 400% 400%;
+  filter: brightness(1.2);
+  opacity: 0;
+  transition: 0.5s;
+  z-index: -1;   /* <- place it behind the text */
+  animation: gradientMove 10s ease infinite;
 }
-button:hover::after { opacity:1; }
-button:hover span { color:#111; }
 
-.stats-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:15px; }
-.stat-box { padding:15px; border-radius:8px; text-align:center; font-weight:bold; background:rgba(0,0,0,0.4); }
 
-.hidden { display:none; }
+button span {
+  position: relative;
+  z-index: 1;   /* text always above the gradient */
+}
 
-.modal { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.75); display:flex; justify-content:center; align-items:center; z-index:100; display:none; }
-.modal.active { display:flex; }
-.modal-content { background:rgba(0,0,0,0.5); backdrop-filter:blur(15px); padding:25px; border-radius:8px; max-width:400px; width:90%; text-align:center; position:relative; }
+button:hover::after {
+  opacity: 1;
+}
 
-.empty-state { text-align:center; color:#ccc; font-size:0.9em; }
-.actions { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; }
+button:hover span {
+  color: #111;
+}
 
-@keyframes gradientMove { 0%{background-position:0 50%}50%{background-position:100% 50%}100%{background-position:0 50%} }
+
+/* Modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.75);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.modal-content {
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(15px);
+  padding: 25px;
+  border-radius: 8px;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  position: relative;
+}
+
+/* Inputs */
+.input-group {
+  margin: 10px 0;
+  text-align: left;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  border-radius: 5px;
+  border: none;
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  margin-top: 20px;
+  color: #aaa;
+  font-size: 0.85em;
+}
