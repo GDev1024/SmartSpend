@@ -8,7 +8,7 @@
 #include <string>
 using namespace std;
 
-// ============= LINKED LIST =============
+//  LINKED LIST 
 
 struct Node {
     string description;
