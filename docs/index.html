@@ -10,19 +10,18 @@
 
 <div class="container">
 
-    <!-- Setup Card -->
-    <div class="card" id="setupCard">
-        <h2>Welcome to SmartSpend</h2>
-        <p>Let's get started by setting your daily allowance</p>
-        <div class="input-group">
-            <label for="allowanceInput">Daily Allowance ($)</label>
-            <input type="number" id="allowanceInput" placeholder="20.00" min="1">
-        </div>
-        <button onclick="startTracking()" class="main-btn"><span>Start Tracking</span></button>
-    </div>
-
     <!-- Main App -->
-    <div id="mainApp" class="hidden">
+    <div id="mainApp">
+
+        <!-- Daily Allowance Setting -->
+        <div class="card">
+            <h3>Daily Allowance</h3>
+            <div class="input-group">
+                <label for="dailyAllowanceInput">Set Your Daily Allowance ($)</label>
+                <input type="number" id="dailyAllowanceInput" placeholder="20.00" min="1" step="0.01" value="20">
+            </div>
+            <button onclick="updateDailyAllowance()"><span>Update Allowance</span></button>
+        </div>
 
         <!-- Quick Actions -->
         <div class="card actions-card">
@@ -107,5 +106,21 @@
 </div>
 
 <script src="JS/SmartSpend.js"></script>
+<script>
+// Initialize app with default allowance on load
+dailyAllowance = 20;
+updateDashboard();
+
+// Function to update daily allowance
+function updateDailyAllowance() {
+    const newAllowance = parseFloat(document.getElementById('dailyAllowanceInput').value);
+    if (!newAllowance || newAllowance <= 0) {
+        alert('Please enter a valid allowance amount');
+        return;
+    }
+    dailyAllowance = newAllowance;
+    alert('Daily allowance updated to $' + newAllowance.toFixed(2));
+}
+</script>
 </body>
 </html>

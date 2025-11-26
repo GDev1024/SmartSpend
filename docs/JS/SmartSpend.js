@@ -7,24 +7,8 @@ let transactions = []; // Array simulating linked list (add to head with unshift
 let savings = []; // Array simulating queue (enqueue with push)
 
 // App State
-let dailyAllowance = 0;
+let dailyAllowance = 20; // Default value
 let currentModalType = '';
-
-// ============= INITIALIZATION =============
-
-function startApp() {
-    const allowance = parseFloat(document.getElementById('allowanceInput').value);
-    if (!allowance || allowance <= 0) {
-        alert('Please enter a valid allowance amount');
-        return;
-    }
-    
-    dailyAllowance = allowance;
-    document.getElementById('setupScreen').classList.add('hidden');
-    document.getElementById('mainApp').classList.remove('hidden');
-    updateDashboard();
-    loadFromStorage();
-}
 
 // ============= MODAL FUNCTIONS =============
 
@@ -191,6 +175,8 @@ function updateDashboard() {
 
     displayTransactions();
     displaySavings();
+
+    updateProjection(); // <-- live projected savings update
 }
 
 function displayTransactions() {
@@ -245,16 +231,13 @@ function displaySavings() {
     `).join('');
 }
 
-// ============= PROJECTION ALGORITHM =============
+// ============= PROJECTION CALCULATION =============
 
-function showProjection() {
-    // Core Algorithm: Calculate projected savings
-    const daysLeft = 30;
+function calculateProjectedSavings(daysLeft = 30) {
     const expenseCount = countExpenses();
-    
     let avgSpending = 0;
     let projected = 0;
-    
+
     if (expenseCount > 0) {
         const totalExpenses = calculateTotalExpenses();
         avgSpending = totalExpenses / expenseCount;
@@ -269,11 +252,32 @@ function showProjection() {
     const currentSavings = calculateTotalSavings();
     const potentialTotal = currentSavings + projected;
 
-    document.getElementById('projAllowance').textContent = '$' + dailyAllowance.toFixed(2);
-    document.getElementById('projAvgSpending').textContent = '$' + avgSpending.toFixed(2);
-    document.getElementById('projDaysLeft').textContent = daysLeft;
-    document.getElementById('projSavings').textContent = '$' + projected.toFixed(2);
-    document.getElementById('projTotal').textContent = '$' + potentialTotal.toFixed(2);
+    return {
+        dailyAllowance: dailyAllowance,
+        avgSpending: avgSpending,
+        daysLeft: daysLeft,
+        projectedSavings: projected,
+        potentialTotal: potentialTotal
+    };
+}
+
+// Remaining days in month
+function getDaysRemainingInMonth() {
+    const today = new Date();
+    const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+    return lastDay.getDate() - today.getDate();
+}
+
+// Update projection card
+function updateProjection() {
+    const daysLeft = getDaysRemainingInMonth();
+    const projection = calculateProjectedSavings(daysLeft);
+
+    document.getElementById('projAllowance').textContent = '$' + projection.dailyAllowance.toFixed(2);
+    document.getElementById('projAvgSpending').textContent = '$' + projection.avgSpending.toFixed(2);
+    document.getElementById('projDaysLeft').textContent = projection.daysLeft;
+    document.getElementById('projSavings').textContent = '$' + projection.projectedSavings.toFixed(2);
+    document.getElementById('projTotal').textContent = '$' + projection.potentialTotal.toFixed(2);
 
     document.getElementById('projectionCard').classList.remove('hidden');
 }
@@ -304,12 +308,10 @@ function resetAllData() {
     if (confirm('Are you sure you want to reset all data? This cannot be undone!')) {
         transactions = [];
         savings = [];
-        dailyAllowance = 0;
+        dailyAllowance = 20;
+        document.getElementById('dailyAllowanceInput').value = 20;
         updateDashboard();
         saveToStorage();
-        document.getElementById('mainApp').classList.add('hidden');
-        document.getElementById('setupScreen').classList.remove('hidden');
-        document.getElementById('allowanceInput').value = '';
     }
 }
 
@@ -321,13 +323,11 @@ function saveToStorage() {
         savings: savings,
         dailyAllowance: dailyAllowance
     };
-    // Note: Using in-memory storage as per requirements
-    // In a real deployment, you could use localStorage here
+    // Using in-memory storage as per requirements
 }
 
 function loadFromStorage() {
-    // Note: Using in-memory storage as per requirements
-    // In a real deployment, you could load from localStorage here
+    // Placeholder if localStorage or server storage is used later
 }
 
 // ============= EXPORT FUNCTION =============
@@ -382,8 +382,6 @@ document.addEventListener('keypress', function(e) {
     if (e.key === 'Enter') {
         if (document.getElementById('modal').classList.contains('active')) {
             submitTransaction();
-        } else if (!document.getElementById('setupScreen').classList.contains('hidden')) {
-            startApp();
         }
     }
 });

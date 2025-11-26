@@ -180,3 +180,67 @@ input {
   color: #aaa;
   font-size: 0.85em;
 }
+
+/* Additional styles needed for proper display */
+.hidden {
+    display: none !important;
+}
+
+.modal.active {
+    display: flex !important;
+}
+
+.transaction-item, .savings-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin: 5px 0;
+    background: rgba(255,255,255,0.05);
+    border-radius: 5px;
+}
+
+.transaction-desc {
+    flex: 1;
+}
+
+.transaction-amount, .savings-amount {
+    font-weight: bold;
+    margin: 0 10px;
+}
+
+.transaction-expense {
+    color: #ff4444;
+}
+
+.transaction-income {
+    color: #44ff44;
+}
+
+.btn-small {
+    padding: 5px 10px;
+    font-size: 0.85em;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 20px;
+    color: #888;
+}
+
+.empty-state .small {
+    font-size: 0.85em;
+    margin-top: 5px;
+}
+
+.actions {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
